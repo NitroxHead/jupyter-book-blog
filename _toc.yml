@@ -1,0 +1,20 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+
+parts:
+  - caption: Quick Links
+    chapters:
+      - file: about
+      - file: projects
+      - file: contact
+  - caption: Blog Posts
+    chapters:
+      - file: book/comprehensive-data-analysis
+      - file: book/mermaid-diagrams
+      - file: book/mathematical-concepts
+      - file: book/code-examples
+      - file: book/image-examples
+      - file: book/hello-world
