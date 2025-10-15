@@ -23,6 +23,7 @@ After exploring various blogging platforms, I discovered that Jupyter Book offer
 - **Interactive Diagrams** - Mermaid diagrams for flowcharts, sequence diagrams, and more
 - **Code Highlighting** - Syntax highlighting for dozens of programming languages
 - **Jupyter Notebook Integration** - Execute and display notebook content directly
+- **Citations & Bibliography** - Academic citation support with BibTeX, multiple citation styles, and automatic bibliography generation
 
 ## Features Showcase
 
@@ -211,6 +212,59 @@ After editing, run `python scripts/update_toc.py` to apply changes.
 - Organize posts in the `posts/` directory
 - Add images to `images/` with subdirectories
 - Create custom navigation pages (About, Projects, etc.) in the root directory
+
+## Citations & Bibliography
+
+This blog supports academic citations and bibliography management using BibTeX. Perfect for research blogs, technical documentation, and scholarly writing.
+
+### Quick Start with Citations
+
+1. **Add references** to `references/global.bib`:
+   ```bibtex
+   @article{smith2024,
+       title = {Example Research Paper},
+       author = {Smith, John},
+       journal = {Journal of Examples},
+       year = {2024}
+   }
+   ```
+
+2. **Cite in your posts**:
+   ```markdown
+   Recent research {cite}`smith2024` shows that...
+
+   ## References
+   {bibliography}
+   ```
+
+### Bibliography Modes
+
+Configure in `blog_config.json` under `bibliography.mode`:
+
+- **global** - Single `references/global.bib` for all posts (simple)
+- **per-post** - Matching `.bib` file per post (organized)
+- **all-files** - All `.bib` files in `references/` (flexible)
+- **auto** - Smart detection with fallbacks (recommended, default)
+
+### Citation Styles
+
+Built-in styles: `plain`, `alpha`, `unsrt`, `author_year` (default)
+
+Custom styles in `references/styles/`: `ieee`, `apa`, `nature`
+
+Change globally in `blog_config.json` or per-post in frontmatter:
+```yaml
+---
+citation_style: "custom:ieee"
+---
+```
+
+### Tools
+
+- **Validation**: `python scripts/validate_bibliography.py` - Check for duplicate keys, syntax errors
+- **Migration**: `python scripts/migrate_bibliography.py` - Migrate from old structure
+
+📖 **[Full Bibliography Documentation](references/README.md)**
 
 ## Why This Approach?
 

@@ -102,5 +102,46 @@
       "**.ipynb_checkpoints"
     ],
     "execute_notebooks": "auto"
+  },
+
+  "bibliography": {
+    "_comment": "Bibliography and citation configuration",
+
+    "mode": "auto",
+    "_mode_comment": "Bibliography modes: 'global' (single file), 'per-post' (matching .bib per post), 'all-files' (all .bib in references/), 'auto' (smart detection with fallbacks)",
+
+    "directories": {
+      "references": "references",
+      "styles": "references/styles"
+    },
+
+    "global_file": "references/global.bib",
+    "_global_file_comment": "Default bibliography file used in 'global' mode or as fallback",
+
+    "discovery": {
+      "_comment": "Auto-discovery settings for 'all-files' and 'auto' modes",
+      "scan_patterns": [
+        "references/*.bib",
+        "posts/*.bib"
+      ],
+      "exclude_patterns": [
+        "references/_*.bib",
+        "references/drafts/*.bib",
+        "**/backup*.bib",
+        "**/*~.bib"
+      ]
+    },
+
+    "citation_style": "author_year",
+    "_citation_style_comment": "Built-in: 'plain', 'alpha', 'unsrt', 'author_year'. Custom: 'custom:ieee', 'custom:apa', 'custom:nature'",
+
+    "validation": {
+      "check_duplicates": true,
+      "warn_missing_keys": true,
+      "strict_mode": false
+    },
+
+    "per_post_override": true,
+    "_override_comment": "Allow posts to specify their own .bib files and styles in frontmatter (bibliography: filename.bib, citation_style: style_name)"
   }
 }

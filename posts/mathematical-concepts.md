@@ -1,6 +1,10 @@
-# Mathematical Concepts in Data Science
+---
+title: "Mathematical Concepts in Data Science"
+date: "2024-03-20"
+description: "This post demonstrates various mathematical notation and concepts commonly used in data science and machine learning."
+---
 
-*March 20, 2024*
+# Mathematical Concepts in Data Science
 
 This post demonstrates various mathematical notation and concepts commonly used in data science and machine learning.
 

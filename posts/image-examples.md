@@ -1,6 +1,10 @@
-# Working with Images in Blog Posts
+---
+title: "Working with Images in Blog Posts"
+date: "2024-03-17"
+description: "This post demonstrates various ways to include and format images in your Jupyter Book blog posts, from basic markdown syntax to advanced MyST features."
+---
 
-*March 17, 2024*
+# Working with Images in Blog Posts
 
 This post demonstrates various ways to include and format images in your Jupyter Book blog posts, from basic markdown syntax to advanced MyST features.
 

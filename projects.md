@@ -28,16 +28,16 @@ Modern web development approaches including:
 ## Blog Posts by Category
 
 ### Data Science & Analytics
-- [Comprehensive Data Analysis: From Theory to Implementation](book/comprehensive-data-analysis.md)
-- [Mathematical Concepts in Data Science](book/mathematical-concepts.md)
+- [Comprehensive Data Analysis: From Theory to Implementation](posts/comprehensive-data-analysis.md)
+- [Mathematical Concepts in Data Science](posts/mathematical-concepts.md)
 
 ### Technical Documentation
-- [Interactive Diagrams with Mermaid](book/mermaid-diagrams.md)
-- [Code Examples and Programming Snippets](book/code-examples.md)
-- [Working with Images in Blog Posts](book/image-examples.md)
+- [Interactive Diagrams with Mermaid](posts/mermaid-diagrams.md)
+- [Code Examples and Programming Snippets](posts/code-examples.md)
+- [Working with Images in Blog Posts](posts/image-examples.md)
 
 ### Getting Started
-- [Hello World!](book/hello-world.md)
+- [Hello World!](posts/hello-world.md)
 
 ---
 

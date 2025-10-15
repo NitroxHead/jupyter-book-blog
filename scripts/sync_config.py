@@ -44,6 +44,104 @@ def get_nested_value(config: Dict[str, Any], *keys, default=None):
     return value if value is not None else default
 
 
+def discover_bib_files(config: Dict[str, Any]) -> list:
+    """
+    Discover .bib files based on bibliography configuration mode.
+
+    Supports three modes:
+    - 'global': Use only global.bib
+    - 'per-post': Look for matching .bib files per post
+    - 'all-files': Use all .bib files in references/
+    - 'auto': Smart detection with fallbacks (default)
+    """
+    bib_config = get_nested_value(config, 'bibliography', default={})
+    mode = bib_config.get('mode', 'auto')
+    global_file = bib_config.get('global_file', 'references/global.bib')
+
+    bib_files = []
+
+    if mode == 'global':
+        # Simple: use only the global file
+        if Path(global_file).exists():
+            bib_files.append(global_file)
+        else:
+            print(f"⚠️  Warning: Global bibliography file {global_file} not found")
+
+    elif mode == 'per-post':
+        # Scan for matching .bib files in posts/
+        posts_dir = Path('posts')
+        if posts_dir.exists():
+            for bib_file in posts_dir.glob('*.bib'):
+                if not bib_file.name.startswith('_'):
+                    bib_files.append(str(bib_file))
+        # Fallback to global if no per-post files found
+        if not bib_files and Path(global_file).exists():
+            bib_files.append(global_file)
+
+    elif mode == 'all-files':
+        # Discover all .bib files based on scan patterns
+        scan_patterns = bib_config.get('discovery', {}).get('scan_patterns',
+                                                             ['references/*.bib', 'posts/*.bib'])
+        exclude_patterns = bib_config.get('discovery', {}).get('exclude_patterns', [])
+
+        for pattern in scan_patterns:
+            for bib_file in Path('.').glob(pattern):
+                # Check if file should be excluded
+                should_exclude = False
+                for exclude_pattern in exclude_patterns:
+                    if Path('.').glob(exclude_pattern):
+                        # Simple check: if filename starts with _ or matches exclude
+                        if bib_file.name.startswith('_') or 'backup' in bib_file.name.lower():
+                            should_exclude = True
+                            break
+
+                if not should_exclude and bib_file.is_file():
+                    bib_files.append(str(bib_file))
+
+    else:  # mode == 'auto' or default
+        # Auto mode: Try to find the best match
+        # Priority: per-post files > all files in references/ > global file
+
+        # Check for per-post .bib files
+        posts_dir = Path('posts')
+        if posts_dir.exists():
+            for bib_file in posts_dir.glob('*.bib'):
+                if not bib_file.name.startswith('_'):
+                    bib_files.append(str(bib_file))
+
+        # Check for files in references/ directory
+        refs_dir = Path('references')
+        if refs_dir.exists():
+            for bib_file in refs_dir.glob('*.bib'):
+                if not bib_file.name.startswith('_'):
+                    bib_files.append(str(bib_file))
+
+        # Fallback to global file if nothing found
+        if not bib_files and Path(global_file).exists():
+            bib_files.append(global_file)
+
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_bib_files = []
+    for f in bib_files:
+        if f not in seen:
+            seen.add(f)
+            unique_bib_files.append(f)
+
+    if unique_bib_files:
+        print(f"📚 Discovered {len(unique_bib_files)} bibliography file(s):")
+        for f in unique_bib_files[:5]:  # Show first 5
+            print(f"   - {f}")
+        if len(unique_bib_files) > 5:
+            print(f"   ... and {len(unique_bib_files) - 5} more")
+    else:
+        print("⚠️  Warning: No bibliography files found")
+        # Return at least the default path so config doesn't break
+        unique_bib_files = ['references/global.bib']
+
+    return unique_bib_files
+
+
 def update_jupyter_book_config(config: Dict[str, Any]) -> bool:
     """Update _config.yml with values from blog_config.json using proper YAML parsing"""
     config_path = Path('_config.yml')
@@ -134,6 +232,21 @@ def update_jupyter_book_config(config: Dict[str, Any]) -> bool:
             jb_config['execute'] = {}
         execute_notebooks = get_nested_value(config, 'build', 'execute_notebooks', default='auto')
         jb_config['execute']['execute_notebooks'] = execute_notebooks
+
+        # Update bibliography settings
+        bib_config = get_nested_value(config, 'bibliography', default={})
+        if bib_config:
+            # Discover .bib files based on mode
+            bib_files = discover_bib_files(config)
+            jb_config['bibtex_bibfiles'] = bib_files
+
+            # Set citation style
+            citation_style = bib_config.get('citation_style', 'author_year')
+            # Handle custom styles (e.g., "custom:ieee" -> "ieee")
+            if citation_style.startswith('custom:'):
+                citation_style = citation_style.split(':', 1)[1]
+
+            jb_config['sphinx']['config']['bibtex_reference_style'] = citation_style
 
         # Write updated config back to file
         # First read the original file to preserve comments at the top

@@ -1,6 +1,10 @@
-# Code Examples and Programming Snippets
+---
+title: "Code Examples and Programming Snippets"
+date: "2024-03-18"
+description: "This post showcases syntax highlighting and code examples across multiple programming languages commonly used in data science and software development."
+---
 
-*March 18, 2024*
+# Code Examples and Programming Snippets
 
 This post showcases syntax highlighting and code examples across multiple programming languages commonly used in data science and software development.
 

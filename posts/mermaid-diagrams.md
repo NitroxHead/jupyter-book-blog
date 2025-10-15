@@ -1,6 +1,10 @@
-# Interactive Diagrams with Mermaid
+---
+title: "Interactive Diagrams with Mermaid"
+date: "2024-03-22"
+description: "This post demonstrates the powerful Mermaid diagram capabilities integrated into this Jupyter Book blog. Mermaid allows you to create interactive flowcharts, sequence diagrams, and more using simple text syntax."
+---
 
-*March 22, 2024*
+# Interactive Diagrams with Mermaid
 
 This post demonstrates the powerful Mermaid diagram capabilities integrated into this Jupyter Book blog. Mermaid allows you to create interactive flowcharts, sequence diagrams, and more using simple text syntax.
 
