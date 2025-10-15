@@ -86,10 +86,10 @@
   },
 
   "deployment": {
-    "_comment": "Deployment settings",
+    "_comment": "Deployment settings - IMPORTANT: Set enabled to true after customizing your blog",
     "github_actions": {
-      "enabled": true,
-      "_comment": "Set to false to disable GitHub Actions deployment"
+      "enabled": false,
+      "_comment": "Set to true to enable GitHub Actions deployment AFTER you've customized the blog settings above"
     }
   },
 

@@ -55,30 +55,38 @@ This repository includes several example posts that demonstrate the system's cap
 
 ### Easy Setup (Recommended)
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd jupyter-book-blog
-   ```
+1. **Use this template**
+   - Click "Use this template" button on GitHub
+   - Or fork/clone: `git clone <your-repo-url>`
 
 2. **Install dependencies**
    ```bash
+   cd jupyter-book-blog
    pip install -r requirements.txt
    ```
 
-3. **Run interactive setup**
+3. **⚠️ IMPORTANT: Configure your blog**
    ```bash
    python scripts/setup_blog.py
    ```
-   This will guide you through customizing your blog title, author, repository URLs, and other settings.
+   This interactive script will:
+   - Set your blog title and author name
+   - Configure repository URLs
+   - Update social media links
+   - **Enable GitHub Actions deployment** (disabled by default for the template)
 
-4. **Build and serve locally**
+4. **Build and preview locally**
    ```bash
    jupyter-book build .
    cd _build/html && python -m http.server 8000
    ```
+   Visit: `http://localhost:8000`
 
-5. **Visit your site**: `http://localhost:8000`
+5. **Enable GitHub Pages deployment**
+   - Go to your repository **Settings → Pages**
+   - Under "Build and deployment", set **Source** to **"GitHub Actions"**
+   - Commit and push your changes
+   - Your site will deploy automatically!
 
 ### Manual Configuration
 
@@ -136,20 +144,22 @@ Simply push to the `main` branch and your site updates automatically.
 
 **Important**: Make sure your `blog_config.json` is committed to your repository so GitHub Actions can use your customized settings.
 
-### Disabling GitHub Actions
+### Enabling/Disabling GitHub Actions
 
-To disable automatic deployment, edit `blog_config.json`:
+**By default, GitHub Actions deployment is DISABLED** to prevent the template from attempting to deploy.
+
+After configuring your blog, enable deployment in `blog_config.json`:
 ```json
 {
   "deployment": {
     "github_actions": {
-      "enabled": false
+      "enabled": true  // Change from false to true
     }
   }
 }
 ```
 
-Set `"enabled": true` to re-enable deployment.
+The `setup_blog.py` script will automatically enable this for you.
 
 ### Manual Deployment
 
