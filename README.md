@@ -32,12 +32,12 @@ This repository includes several example posts that demonstrate the system's cap
 
 | Post | Features Demonstrated |
 |------|----------------------|
-| **[Comprehensive Data Analysis](book/comprehensive-data-analysis.md)** | Complete data science workflow with Python code, visualizations, mathematical formulas, and process diagrams |
-| **[Interactive Diagrams with Mermaid](book/mermaid-diagrams.md)** | Flowcharts, sequence diagrams, class diagrams, ER diagrams, state machines, and Gantt charts |
-| **[Mathematical Concepts](book/mathematical-concepts.md)** | LaTeX equations, statistical formulas, and mathematical notation |
-| **[Code Examples](book/code-examples.md)** | Multi-language syntax highlighting for Python, JavaScript, SQL, R, and more |
-| **[Working with Images](book/image-examples.md)** | Image handling, galleries, captions, and responsive layouts |
-| **[Hello World!](book/hello-world.md)** | Getting started guide and basic formatting examples |
+| **[Comprehensive Data Analysis](posts/comprehensive-data-analysis.md)** | Complete data science workflow with Python code, visualizations, mathematical formulas, and process diagrams |
+| **[Interactive Diagrams with Mermaid](posts/mermaid-diagrams.md)** | Flowcharts, sequence diagrams, class diagrams, ER diagrams, state machines, and Gantt charts |
+| **[Mathematical Concepts](posts/mathematical-concepts.md)** | LaTeX equations, statistical formulas, and mathematical notation |
+| **[Code Examples](posts/code-examples.md)** | Multi-language syntax highlighting for Python, JavaScript, SQL, R, and more |
+| **[Working with Images](posts/image-examples.md)** | Image handling, galleries, captions, and responsive layouts |
+| **[Hello World!](posts/hello-world.md)** | Getting started guide and basic formatting examples |
 
 ### 🛠 **Automation Features**
 
@@ -52,7 +52,7 @@ This repository includes several example posts that demonstrate the system's cap
 - Python 3.8+
 - Git
 
-### Local Development
+### Easy Setup (Recommended)
 
 1. **Clone the repository**
    ```bash
@@ -65,11 +65,11 @@ This repository includes several example posts that demonstrate the system's cap
    pip install -r requirements.txt
    ```
 
-3. **Update content and metadata**
+3. **Run interactive setup**
    ```bash
-   python scripts/update_toc.py        # Update table of contents
-   python scripts/generate_posts.py    # Update homepage
+   python scripts/setup_blog.py
    ```
+   This will guide you through customizing your blog title, author, repository URLs, and other settings.
 
 4. **Build and serve locally**
    ```bash
@@ -79,14 +79,42 @@ This repository includes several example posts that demonstrate the system's cap
 
 5. **Visit your site**: `http://localhost:8000`
 
+### Manual Configuration
+
+If you prefer to configure manually:
+
+1. **Edit blog_config.json** - Update your blog settings
+2. **Apply configuration**: `python scripts/sync_config.py`
+3. **Update content**:
+   ```bash
+   python scripts/update_toc.py        # Update table of contents
+   python scripts/generate_posts.py    # Update homepage
+   ```
+
 ### Adding New Posts
 
-1. Create a new `.md` file in the `book/` directory
-2. Add frontmatter with date in this format: `*March 15, 2024*`
+1. Create a new `.md` file in the `posts/` directory
+2. Add YAML frontmatter at the top (recommended):
+   ```yaml
+   ---
+   title: "Your Post Title"
+   date: "2024-03-15"
+   description: "A brief description of your post"
+   ---
+   ```
+
+   **Supported date formats:**
+   - ISO: `2024-03-15` (recommended)
+   - US: `March 15, 2024`
+   - EU: `15/03/2024`
+   - US short: `03/15/2024`
+
+   *Legacy format with dates in italics (`*March 15, 2024*`) is also supported for backwards compatibility.*
+
 3. Run the update scripts:
    ```bash
-   python scripts/update_toc.py
-   python scripts/generate_posts.py
+   python scripts/update_toc.py        # Updates navigation
+   python scripts/generate_posts.py    # Updates homepage
    ```
 4. Rebuild: `jupyter-book build .`
 
@@ -98,11 +126,29 @@ The homepage and navigation will be updated automatically!
 
 The repository includes a GitHub Actions workflow that automatically:
 
-1. Updates table of contents and homepage
-2. Builds the Jupyter Book
-3. Deploys to GitHub Pages
+1. **Syncs your configuration** from `blog_config.json`
+2. **Updates table of contents** and homepage
+3. **Builds the Jupyter Book**
+4. **Deploys to GitHub Pages**
 
 Simply push to the `main` branch and your site updates automatically.
+
+**Important**: Make sure your `blog_config.json` is committed to your repository so GitHub Actions can use your customized settings.
+
+### Disabling GitHub Actions
+
+To disable automatic deployment, edit `blog_config.json`:
+```json
+{
+  "deployment": {
+    "github_actions": {
+      "enabled": false
+    }
+  }
+}
+```
+
+Set `"enabled": true` to re-enable deployment.
 
 ### Manual Deployment
 
@@ -112,11 +158,30 @@ For other platforms, build locally and deploy the `_build/html` directory.
 
 ### Configuration
 
-Edit `_config.yml` to customize:
-- Site title and author
-- Theme colors and styling
-- Repository links
-- Analytics integration
+The blog uses a centralized configuration system:
+
+1. **blog_config.json** - Main configuration file containing:
+   - Blog title, author, and description
+   - Repository and website URLs
+   - Social media links
+   - **Navigation structure** - Customize Quick Links and section titles
+   - Homepage settings (banner, welcome text)
+   - Post display options (date formats, sorting, description length)
+   - Feature toggles (GitHub buttons, search, Mermaid, math)
+   - Build settings (exclude patterns, notebook execution)
+
+2. **Automated Sync** - Changes in `blog_config.json` are automatically applied to:
+   - `_config.yml` (Jupyter Book configuration)
+   - `_toc.yml` (Navigation structure)
+   - `index.md` (Homepage content)
+   - Scripts behavior
+
+### Easy Customization Steps
+
+1. **Run setup script**: `python scripts/setup_blog.py` (interactive)
+2. **Or edit manually**: Update `blog_config.json`
+3. **Apply changes**: `python scripts/sync_config.py`
+4. **Rebuild**: `jupyter-book build .`
 
 ### Styling
 
@@ -124,11 +189,28 @@ Edit `_config.yml` to customize:
 - Modify HTML templates
 - Customize Mermaid diagram styling
 
+### Customizing Navigation
+
+Edit `blog_config.json` to customize the navigation structure:
+
+```json
+"navigation": {
+  "quick_links": [
+    {"title": "About", "file": "about"},
+    {"title": "Projects", "file": "projects"},
+    {"title": "Contact", "file": "contact"}
+  ],
+  "blog_section_title": "Blog Posts"
+}
+```
+
+After editing, run `python scripts/update_toc.py` to apply changes.
+
 ### Content Organization
 
-- Organize posts in the `book/` directory
+- Organize posts in the `posts/` directory
 - Add images to `images/` with subdirectories
-- Use the `examples/` directory for reference content
+- Create custom navigation pages (About, Projects, etc.) in the root directory
 
 ## Why This Approach?
 

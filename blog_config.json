@@ -1,0 +1,106 @@
+{
+  "_comment": "Blog Configuration - Update these settings to customize your Jupyter Book blog",
+  "_schema_version": "1.0",
+
+  "blog": {
+    "title": "Jupyter Book Blog Template",
+    "description": "A modern technical blog powered by Jupyter Book",
+    "author": "Blog Author",
+    "copyright": "© 2024 Blog Author. All rights reserved.",
+    "logo": {
+      "_comment": "Logo can be 'text' or 'image'. If image, provide path or URL",
+      "type": "image",
+      "value": "images/general/logo.png"
+    },
+    "favicon": "images/general/logo.png"
+  },
+
+  "urls": {
+    "repository": "https://github.com/yourusername/jupyter-book-blog",
+    "website": "https://yourusername.github.io/jupyter-book-blog",
+    "branch": "main"
+  },
+
+  "social": {
+    "_comment": "Social links - leave empty string if not used",
+    "github": "yourusername",
+    "twitter": "",
+    "linkedin": "",
+    "email": "your.email@example.com"
+  },
+
+  "navigation": {
+    "_comment": "Configure navigation structure - Quick Links section",
+    "quick_links": [
+      {
+        "title": "About",
+        "file": "about"
+      },
+      {
+        "title": "Projects",
+        "file": "projects"
+      },
+      {
+        "title": "Contact",
+        "file": "contact"
+      }
+    ],
+    "blog_section_title": "Blog Posts"
+  },
+
+  "homepage": {
+    "welcome_text": "Welcome to my technical blog! This is where I share my thoughts, experiences, and insights on various topics.",
+    "banner": {
+      "_comment": "Banner can be 'image', 'url', 'text', or 'none'",
+      "type": "image",
+      "value": "images/general/banner.jpg",
+      "alt_text": "Banner"
+    },
+    "footer_note": "*Add your own posts to the `posts/` directory and run `python scripts/generate_posts.py` to update this page automatically.*"
+  },
+
+  "posts": {
+    "_comment": "Blog post settings",
+    "max_posts_on_homepage": 0,
+    "description_length": 150,
+    "date_format": "%B %d, %Y",
+    "sort_order": "newest_first",
+    "supported_date_formats": [
+      "%B %d, %Y",
+      "%Y-%m-%d",
+      "%d/%m/%Y",
+      "%m/%d/%Y"
+    ]
+  },
+
+  "features": {
+    "github_buttons": {
+      "repository": true,
+      "issues": true,
+      "edit": true,
+      "download": true
+    },
+    "search": true,
+    "mermaid_diagrams": true,
+    "math_equations": true
+  },
+
+  "deployment": {
+    "_comment": "Deployment settings",
+    "github_actions": {
+      "enabled": true,
+      "_comment": "Set to false to disable GitHub Actions deployment"
+    }
+  },
+
+  "build": {
+    "_comment": "Build settings",
+    "exclude_patterns": [
+      "_build",
+      "Thumbs.db",
+      ".DS_Store",
+      "**.ipynb_checkpoints"
+    ],
+    "execute_notebooks": "auto"
+  }
+}

@@ -1,6 +1,10 @@
-# Hello World!
+---
+title: "Hello World!"
+date: "2024-03-15"
+description: "Welcome to my new Jupyter Book blog! This is my first post to get things started."
+---
 
-*March 15, 2024*
+# Hello World!
 
 Welcome to my new Jupyter Book blog! This is my first post to get things started.
 
@@ -39,3 +43,23 @@ Thanks for visiting, and I hope you find the content useful!
 ---
 
 *This is the first post in the blog template. Replace this with your own content!*
+
+## Creating Your Own Posts
+
+This post uses **frontmatter** (YAML metadata at the top) for better organization:
+
+```yaml
+---
+title: "Your Post Title"
+date: "2024-03-15"  # ISO format: YYYY-MM-DD
+description: "A brief description of your post"
+---
+```
+
+**Supported date formats:**
+- ISO: `2024-03-15`
+- US: `March 15, 2024`
+- EU: `15/03/2024`
+- US short: `03/15/2024`
+
+The blog system also supports **legacy format** (date in italics: `*March 15, 2024*`) for backwards compatibility.

@@ -2,14 +2,20 @@
 __pycache__/
 *.py[cod]
 *$py.class
-docs/data/
-!./_build/html/CNAME
-_build/html/
+
+# Jupyter Book build artifacts
 _build/
+.jupyter_cache/
+*.cached
+
+# IDE and editor settings
 .vscode/
-private/
-.ipynb_checkpoints/
 .claude/
+.ipynb_checkpoints/
+
+# Private/scratch directories
+docs/data/
+private/
 
 # C extensions
 *.so
@@ -170,6 +176,7 @@ $RECYCLE.BIN/
 *.tmp
 *.bak
 *.backup
+*.py.backup
 
 # Logs and databases
 *.log
@@ -180,3 +187,8 @@ $RECYCLE.BIN/
 .env
 .env.local
 .env.*.local
+
+# Personal blog configuration (users should customize this)
+# Note: blog_config.json is committed to the template but users should update it
+# If you want to keep your personal config private, uncomment the line below:
+# blog_config.json

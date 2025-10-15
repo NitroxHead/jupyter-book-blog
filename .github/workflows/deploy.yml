@@ -2,9 +2,16 @@ name: Deploy Jupyter Book to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
+  workflow_dispatch:  # Allow manual triggering
+
+# This workflow automatically:
+# 1. Syncs configuration from blog_config.json
+# 2. Updates table of contents and homepage
+# 3. Builds and deploys the Jupyter Book
+# Make sure your blog_config.json is committed for customization
 
 # Allow one concurrent deployment
 concurrency:
@@ -18,8 +25,46 @@ permissions:
   id-token: write
 
 jobs:
+  check-deployment:
+    runs-on: ubuntu-latest
+    outputs:
+      should-deploy: ${{ steps.check.outputs.deploy }}
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Check if deployment is enabled
+      id: check
+      run: |
+        if [ -f "blog_config.json" ]; then
+          # Check if GitHub Actions deployment is enabled
+          ENABLED=$(python3 -c "
+        import json
+        import sys
+        try:
+            with open('blog_config.json', 'r') as f:
+                config = json.load(f)
+            enabled = config.get('deployment', {}).get('github_actions', {}).get('enabled', True)
+            print('true' if enabled else 'false')
+        except Exception as e:
+            print('true')  # Default to enabled if there's any error
+        " 2>/dev/null || echo "true")
+
+          if [ "$ENABLED" = "false" ]; then
+            echo "🚫 GitHub Actions deployment is disabled in blog_config.json"
+            echo "deploy=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ GitHub Actions deployment is enabled"
+            echo "deploy=true" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "⚠️ blog_config.json not found, assuming deployment enabled"
+          echo "deploy=true" >> $GITHUB_OUTPUT
+        fi
+
   build:
     runs-on: ubuntu-latest
+    needs: check-deployment
+    if: needs.check-deployment.outputs.should-deploy == 'true'
     steps:
     - uses: actions/checkout@v4
 
@@ -31,6 +76,15 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+
+    - name: Sync configuration
+      run: |
+        if [ -f "blog_config.json" ]; then
+          echo "📋 Syncing blog configuration..."
+          python3 scripts/sync_config.py
+        else
+          echo "⚠️  blog_config.json not found, using default configuration"
+        fi
 
     - name: Update TOC automatically
       run: |
@@ -45,22 +99,22 @@ jobs:
         jupyter-book build .
 
     - name: Setup Pages
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
       uses: actions/configure-pages@v4
 
     - name: Upload artifact
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
       uses: actions/upload-pages-artifact@v3
       with:
         path: '_build/html'
 
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && needs.check-deployment.outputs.should-deploy == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, check-deployment]
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

@@ -3,61 +3,45 @@
 # See the documentation for help and more options:
 # https://jupyterbook.org/customize/config.html
 
-#######################################################################################
-# Book settings
-title: Jupyter Book Blog Template # The title of the book. Will be placed in the left navbar.
-author: Blog Author # The author of the book
-copyright: "" # Optional copyright notice
-logo: images/general/logo.png # A path to the book logo
-# Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
-exclude_patterns: [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
-# Auto-exclude files not in the toc
+title: Jupyter Book Blog Template
+author: Blog Author
+copyright: ''
+logo: images/general/logo.png
+exclude_patterns:
+- _build
+- Thumbs.db
+- .DS_Store
+- '**.ipynb_checkpoints'
 only_build_toc_files: true
-
-# Force re-execution of notebooks on each build.
-# See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: "auto" # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
-  cache: "" # A path to the jupyter cache that will be used to store execution artifacts. Defaults to `_build/.jupyter_cache/`
-  exclude_patterns: [] # A list of patterns to *skip* in execution (e.g. a notebook that takes a really long time)
-  timeout: 100 # The maximum time (in seconds) each notebook cell is allowed to run.
-  run_in_temp:
-    false # If `True`, then a temporary directory will be created and used as the command working directory (cwd),
-    # otherwise the notebook's parent directory will be the cwd.
-  allow_errors: false # If `False`, when a code cell raises an error the execution is stopped, otherwise all cells are always run.
-  stderr_output: show # One of 'show', 'remove', 'remove-warn', 'warn', 'error', 'severe'
-
+  execute_notebooks: auto
+  cache: ''
+  exclude_patterns: []
+  timeout: 100
+  run_in_temp: false
+  allow_errors: false
+  stderr_output: show
 launch_buttons:
-  colab_url: "https://colab.research.google.com"
-  notebook_interface: "jupyterlab"
-  binderhub_url: "https://mybinder.org"
-
-# Information about where the book exists on the web
+  colab_url: https://colab.research.google.com
+  notebook_interface: jupyterlab
+  binderhub_url: https://mybinder.org
 repository:
-  url: https://github.com/yourusername/jupyter-book-blog # Online location of your book
-  # path_to_book: docs # Optional path to your book, relative to the repository root
-  branch: main # Which branch of the repository should be used when creating links (optional)
-
-# Add GitHub buttons to your book
-# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+  url: https://github.com/yourusername/jupyter-book-blog
+  branch: main
 html:
-  favicon: "images/general/logo.png"
-  baseurl: https://yourusername.github.io/jupyter-book-blog # The base URL where your book will be hosted.
+  favicon: images/general/logo.png
+  baseurl: https://yourusername.github.io/jupyter-book-blog
   use_repository_button: true
   use_issues_button: true
   use_edit_page_button: true
   use_download_button: true
   extra_css:
-    - _static/mermaid.css
-  # thebe: true
-  # google_analytics_id: G-XXXXXXX
-
+  - _static/mermaid.css
 sphinx:
   config:
-    # html_extra_path: ["CNAME", "robots.txt"]
     html_js_files:
-      - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
-      - _static/mermaid-init.js
+    - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
+    - _static/mermaid-init.js
     html_theme_options:
       use_download_button: true
       repository_url: https://github.com/yourusername/jupyter-book-blog
@@ -65,34 +49,24 @@ sphinx:
       use_repository_button: true
       use_edit_page_button: true
       launch_buttons:
-        {
-          binderhub_url: "https://mybinder.org",
-          colab_url: "https://colab.research.google.com",
-        }
-      extra_footer: |
-        <p>
+        binderhub_url: https://mybinder.org
+        colab_url: https://colab.research.google.com
+      extra_footer: '<p>
+
         © 2024 Blog Author. All rights reserved.
-        </p>
+
+        </p>'
     myst_enable_extensions:
-      - html_image
-      - colon_fence
-      - deflist
-      - dollarmath
-      - html_admonition
-      - linkify
-      - replacements
-      - smartquotes
-      - substitution
-      - tasklist
+    - html_image
+    - colon_fence
+    - deflist
+    - dollarmath
+    - html_admonition
+    - linkify
+    - replacements
+    - smartquotes
+    - substitution
+    - tasklist
     bibtex_reference_style: author_year
-
-
-# Define the name of the latex output file for PDF builds
-# latex:
-#   latex_documents:
-#     targetname: book.tex
-
-
-# Add a bibtex file so that we can create citations
 bibtex_bibfiles:
-  - book/references.bib
+- posts/references.bib

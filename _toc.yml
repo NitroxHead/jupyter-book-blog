@@ -12,9 +12,9 @@ parts:
       - file: contact
   - caption: Blog Posts
     chapters:
-      - file: book/comprehensive-data-analysis
-      - file: book/mermaid-diagrams
-      - file: book/mathematical-concepts
-      - file: book/code-examples
-      - file: book/image-examples
-      - file: book/hello-world
+      - file: posts/comprehensive-data-analysis
+      - file: posts/mermaid-diagrams
+      - file: posts/mathematical-concepts
+      - file: posts/code-examples
+      - file: posts/image-examples
+      - file: posts/hello-world
